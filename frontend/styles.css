@@ -81,10 +81,6 @@ a {
     color: white;
   }
 
-.logout {
-    float: right;
-}
-
 .logout-button {
     background-color: gray;
     border: none;
@@ -108,4 +104,3 @@ a {
 .button2:hover {
     background-color: red;
 }
-
