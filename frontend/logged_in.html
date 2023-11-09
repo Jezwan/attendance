@@ -5,37 +5,60 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <title>Home</title>
 </head>
 <body>
 
-<div class="page-wrapper">
-
-        <!--header starts-->
-         <div class="header"> 
-                <div class="search-bar">
-                    <input type="text" method="put" id="search" placeholder="Search" value="">
-                    <input type='submit' onclick="getData()">
-                </div>
-                <div class="date-bar">
-                    <input type="date" method="put" id="date" placeholder="Search" value="">
-                    <input type='submit' onclick="getDate()">
-                </div>
-                <div class="emp"></div>
-                <div class="logout">
-                    <a href="https://attendance.auth.eu-north-1.amazoncognito.com/logout?client_id=75s7eiur90nbaifo0ddh6egahb&logout_uri=http%3A%2F%2Flocalhost%3A8000%2Findex.html"><button class="logout-button button2">Log out</button></a>
-                </div>
-        </div>
-        <!--header ends-->
-        
-        <!--Desktop 1 starts-->
-            <div class="header-container">
-                <ul></ul>
+    <nav class="navbar nav-color">
+        <div class="container-fluid margin">
+            <div class="d-flex">
+                <form class="d-flex margin-right" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Name" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Date" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
             </div>
-        <!--Desktop 1 ends-->
-        
-</div>
+            <a href="https://attendance.auth.eu-north-1.amazoncognito.com/logout?client_id=75s7eiur90nbaifo0ddh6egahb&logout_uri=http%3A%2F%2Flocalhost%3A8000%2Findex.html"><button type="button" class="btn btn-outline-danger">Log out</button>
+            </a>    
+        </div>
+    </nav>
 
+    <div class="container margin-top">
+        <table class="table table-dark table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td colspan="2">Larry the Bird</td>
+                <td>@twitter</td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+      
 <script src="main.js"></script>
 
 </body>
