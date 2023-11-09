@@ -13,12 +13,9 @@
     <nav class="navbar nav-color">
         <div class="container-fluid margin">
             <div class="d-flex">
-                <form class="d-flex margin-right" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Name" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Date" aria-label="Search">
+                <form class="form d-flex margin-right">
+                    <input class="form-control me-2" type="search" id="name" placeholder="Name">
+                    <input class="form-control me-2" type="date" id="date" placeholder="Date">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </div>
@@ -31,31 +28,13 @@
         <table class="table table-dark table-striped">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+                <th scope="col">Name</th>
+                <th scope="col">ID</th>
+                <th scope="col">Timestamp</th>
+                <th scope="col">Status</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
-              </tr>
-            </tbody>
+            <tbody id="table"></tbody>
           </table>
     </div>
       
