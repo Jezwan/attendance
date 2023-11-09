@@ -109,3 +109,13 @@ a {
     background-color: red;
 }
 
+body{
+    background: linear-gradient(252.44deg, #0D51EB 0%, #2899FF 100%);
+}
+.nav-color{
+    background: linear-gradient(271.78deg, #03045E 0%, #353684 51%, #41428D 100.93%);
+}
+.margin-right{
+    margin-right: 30px;
+}
+
