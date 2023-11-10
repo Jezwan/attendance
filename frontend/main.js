@@ -6,39 +6,23 @@ document.querySelector('form').addEventListener('submit', function(event) {
     var date = document.getElementById('date').value;
 
     fetch('https://0m3q5zuw40.execute-api.eu-north-1.amazonaws.com/invoke/dbmanager')
-    .then(res => console.log(typeof res.json()))
+    .then(res => res.json())
     .then(data => {
-        var resultsByName = data.filter(item => item.name.toLowerCase() == name.toLowerCase());
-        var resultsByDate = data.filter(item => item.date == date);
-        var resultsByNameAndDate = data.filter(item => item.name.toLowerCase() == name.toLowerCase() && item.date == date);
-        return [resultsByName, resultsByDate, resultsByNameAndDate]
+        if (date == '') {
+            var object = data.filter(item => item.name.toLowerCase() == name.toLowerCase());
+        }
+        else if (name == '') {
+            var object = data.filter(item => item.date == date);
+        }
+        else {
+            var object = data.filter(item => item.name.toLowerCase() == name.toLowerCase() && item.date == date);
+        }
+        return object
     })
-    .then(arr => {
+    .then(data => {
         document.getElementById('table').innerHTML = ''
-        if(arr[2].length != 0) {
-            arr[2].forEach(user => {
-                const payload = `<tr>
-                                <th scope="row">${user.name}</th>
-                                <td>${user.id}</td>
-                                <td>${user.date}</td>
-                                <td>${user.status}</td>
-                                </tr>`
-                document.getElementById('table').insertAdjacentHTML('beforeend', payload)
-            })
-        }
-        else if(arr[1].length != 0) {
-            arr[1].forEach(user => {
-                const payload = `<tr>
-                                <th scope="row">${user.name}</th>
-                                <td>${user.id}</td>
-                                <td>${user.date}</td>
-                                <td>${user.status}</td>
-                                </tr>`
-                document.getElementById('table').insertAdjacentHTML('beforeend', payload)
-            })
-        }
-        else if(arr[0].length != 0) {
-            arr[0].forEach(user => {
+        if(Object.keys(data).length != 0) {
+            data.forEach(user => {
                 const payload = `<tr>
                                 <th scope="row">${user.name}</th>
                                 <td>${user.id}</td>
@@ -52,6 +36,8 @@ document.querySelector('form').addEventListener('submit', function(event) {
             callData()
         }
     })
+    .catch(error => console.log(error));
+
 });
 
 //calling data from aws
@@ -72,7 +58,5 @@ function callData() {
                 document.getElementById('table').insertAdjacentHTML('beforeend', payload)
             });
         })
-        .catch(error => {
-                console.log(error)
-        })
+        .catch(error => console.log(error));
 }
