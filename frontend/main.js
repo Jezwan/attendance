@@ -6,11 +6,11 @@ document.querySelector('form').addEventListener('submit', function(event) {
     var date = document.getElementById('date').value;
 
     fetch('https://0m3q5zuw40.execute-api.eu-north-1.amazonaws.com/invoke/dbmanager')
-    .then(res => res.json())
+    .then(res => console.log(typeof res.json()))
     .then(data => {
-        var resultsByName = data.filter(item => item.name.toLowerCase() == (name.toLowerCase()));
+        var resultsByName = data.filter(item => item.name.toLowerCase() == name.toLowerCase());
         var resultsByDate = data.filter(item => item.date == date);
-        var resultsByNameAndDate = data.filter(item => item.name.toLowerCase() == (name.toLowerCase()) && item.date == date);
+        var resultsByNameAndDate = data.filter(item => item.name.toLowerCase() == name.toLowerCase() && item.date == date);
         return [resultsByName, resultsByDate, resultsByNameAndDate]
     })
     .then(arr => {
