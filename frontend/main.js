@@ -26,8 +26,7 @@ document.querySelector('form').addEventListener('submit', function(event) {
                 document.getElementById('table').insertAdjacentHTML('beforeend', payload)
             })
         }
-        else if(arr[1].length != 0 && arr[1].forEach(item =>
-            item.name.toLowerCase() == name.toLowerCase())) {
+        else if(arr[1].length != 0) {
             arr[1].forEach(user => {
                 const payload = `<tr>
                                 <th scope="row">${user.name}</th>
@@ -38,7 +37,7 @@ document.querySelector('form').addEventListener('submit', function(event) {
                 document.getElementById('table').insertAdjacentHTML('beforeend', payload)
             })
         }
-        else if(arr[0].length != 0 && arr[0].forEach(item => item.date == date)) {
+        else if(arr[0].length != 0) {
             arr[0].forEach(user => {
                 const payload = `<tr>
                                 <th scope="row">${user.name}</th>
