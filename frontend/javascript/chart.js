@@ -1,40 +1,68 @@
-const jsonData = [
-  {"ts": "1699727403005", "date": "Sat Nov 11 18:29:42 2023\n", "id": "A1", "name": "Aby mathew", "status": "Exit"}, {"ts": "1699727413668", "date": "Sat Nov 11 18:29:42 2023\n", "id": "A2", "name": "Bob Simon", "status": "Exit"}, {"ts": "1699727395068", "date": "Sat Nov 11 18:29:42 2023\n", "id": "A2", "name": "Bob Simon", "status": "Exit"}, {"ts": "1699727412620", "date": "Sat Nov 11 18:29:42 2023\n", "id": "A2", "name": "Bob Simon", "status": "Entry"}, {"ts": "1699727359206", "date": "Sat Nov 11 18:29:12 2023\n", "id": "A1", "name": "Aby mathew", "status": "Entry"}, {"ts": "1699718589626", "date": "Sat Nov 11 16:03:05 2023\n", "id": "A2", "name": "Bob Simon", "status": "Entry"}, {"ts": "1699727582271", "date": "Sat Nov 11 18:32:54 2023\n", "id": "A2", "name": "Bob Simon", "status": "Exit"}, {"ts": "1699727459943", "date": "Sat Nov 11 18:29:42 2023\n", "id": "A2", "name": "Bob Simon", "status": "Entry"}, {"ts": "1699727524652", "date": "Sat Nov 11 18:31:49 2023\n", "id": "A2", "name": "Bob Simon", "status": "Exit"}, {"ts": "1699718587914", "date": "Sat Nov 11 16:03:05 2023\n", "id": "A1", "name": "Aby mathew", "status": "Entry"}, {"ts": "1699727457953", "date": "Sat Nov 11 18:29:42 2023\n", "id": "A2", "name": "Bob Simon", "status": "Entry"}, {"ts": "1699727458645", "date": "Sat Nov 11 18:29:42 2023\n", "id": "A2", "name": "Bob Simon", "status": "Exit"}, {"ts": "1699727440145", "date": "Sat Nov 11 18:29:42 2023\n", "id": "A1", "name": "Aby mathew", "status": "Exit"}, {"ts": "1699727432872", "date": "Sat Nov 11 18:29:42 2023\n", "id": "A2", "name": "Bob Simon", "status": "Exit"}, {"ts": "1699727356754", "date": "Sat Nov 11 18:29:12 2023\n", "id": "A2", "name": "Bob Simon", "status": "Entry"}, {"ts": "1699718592713", "date": "Sat Nov 11 16:03:05 2023\n", "id": "A1", "name": "Aby mathew", "status": "Exit"}, {"ts": "1699727431649", "date": "Sat Nov 11 18:29:42 2023\n", "id": "A2", "name": "Bob Simon", "status": "Entry"}, {"ts": "1699718595966", "date": "Sat Nov 11 16:03:05 2023\n", "id": "A2", "name": "Bob Simon", "status": "Exit"}, {"ts": "1699718597214", "date": "Sat Nov 11 16:03:05 2023\n", "id": "A2", "name": "Bob Simon", "status": "Entry"}, {"ts": "1699718599241", "date": "Sat Nov 11 16:03:05 2023\n", "id": "A1", "name": "Aby mathew", "status": "Entry"}, {"ts": "1699727581086", "date": "Sat Nov 11 18:32:54 2023\n", "id": "A2", "name": "Bob Simon", "status": "Entry"}, {"ts": "1699727423111", "date": "Sat Nov 11 18:29:42 2023\n", "id": "A1", "name": "Aby mathew", "status": "Entry"}
-];
+fetch('https://0m3q5zuw40.execute-api.eu-north-1.amazonaws.com/invoke/dbmanager')
+.then(res => {
+  return res.json()
+})
+.then(json => {
+  json.sort((first,second) => {
+    return first.ts - second.ts
+  })
+  const workingHoursData = {}
+  const colorPalette = [
+    'rgba(255, 0, 0, 0.5)',
+    'rgba(60, 179, 113, 0.5)',
+    'rgba(255, 165, 0, 0.5)',
+    'rgba(0, 0, 255, 0.5)',
+    'rgba(238, 130, 238, 0.5)',
+    'rgba(106, 90, 205, 0.5)',
+  ]
+  json.forEach((item, index) => {
+    if (!workingHoursData[item.id]) {
+      workingHoursData[item.id] = { name: item.name, totalHours: 0, color: colorPalette[index] }
+    }
+    if (item.status === "Entry") {
+      workingHoursData[item.id].lastEntryTimestamp = item.ts
+    } 
+    else if (item.status === "Exit" && workingHoursData[item.id].lastEntryTimestamp) {
+      const entryTimestamp = parseInt(workingHoursData[item.id].lastEntryTimestamp, 10)
+      const exitTimestamp = parseInt(item.ts, 10)
+      const hoursWorked = (exitTimestamp - entryTimestamp) / (60 * 60)
+      workingHoursData[item.id].totalHours += hoursWorked
+      workingHoursData[item.id].lastEntryTimestamp = null
+    }
+  })
 
-// Extract labels and data from JSON
-const labels = jsonData.map(entry => entry.date);
-const entryData = jsonData.map(entry => entry.status === "Entry" ? 1 : 0);
-const exitData = jsonData.map(entry => entry.status === "Exit" ? 1 : 0);
+  const labels = Object.keys(workingHoursData);
+  const data = labels.map(id => workingHoursData[id].totalHours)
+  const backgroundColors = labels.map(id => workingHoursData[id].color)
 
-// Create a bar chart using Chart.js
-const ctx = document.getElementById('myChart').getContext('2d');
-const myChart = new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: labels,
-    datasets: [
-      {
-        label: 'Entry',
-        data: entryData,
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
+  const ctx = document.getElementById('myChart').getContext('2d')
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels.map(id => workingHoursData[id].name),
+      datasets: [{
+        label: 'Working hours',
+        data: data,
+        backgroundColor: backgroundColors,
+        borderColor: backgroundColors,
         borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Total Working hours'
+          }
+        }
       },
-      {
-        label: 'Exit',
-        data: exitData,
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: 'rgba(255, 99, 132, 1)',
-        borderWidth: 1
-      }
-    ]
-  },
-  options: {
-    scales: {
-      y: {
-        beginAtZero: true
+      plugins: {
+        legend: {
+          display: false
+        }
       }
     }
-  }
-});
+  })
+})

@@ -11,13 +11,13 @@ document.querySelector('form').addEventListener('submit', function(event) {
     })
     .then(data => {
         if (date == '') {
-            var object = data.filter(item => item.name.toLowerCase().replace(/\s/g, '').includes(name.toLowerCase().replace(/\s/g, '')))
+            object = data.filter(item => item.name.toLowerCase().replace(/\s/g, '').includes(name.toLowerCase().replace(/\s/g, '')))
         }
         else if (name == '') {
-            var object = data.filter(item => timestamp(item.ts).date == date)
+            object = data.filter(item => timestamp(item.ts).date == date)
         }
         else {
-            var object = data.filter(item => item.name.toLowerCase().replace(/\s/g, '') == name.toLowerCase().replace(/\s/g, '') && timestamp(item.ts).date == date)
+            object = data.filter(item => item.name.toLowerCase().replace(/\s/g, '') == name.toLowerCase().replace(/\s/g, '') && timestamp(item.ts).date == date)
         }
         return object
     })

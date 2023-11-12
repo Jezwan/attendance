@@ -97,8 +97,9 @@ body{
     margin-right: 30px;
 }
 
-.margin-top{
+.margin-top-bottom{
     margin-top: 110px;
+    margin-bottom: 110px;
 }
 
 td{
@@ -108,4 +109,9 @@ td{
 .text-center{
     text-align: center;
     text-decoration: underline;
+}
+
+#myChart{
+    background-color: white;
+    padding: 50px 100px ;
 }
