@@ -10,6 +10,9 @@ document.querySelector('form').addEventListener('submit', function(event) {
         return res.json()
     })
     .then(data => {
+        data.sort((first,second) => {
+            return first.ts - second.ts
+        })
         if (date == '') {
             object = data.filter(item => item.name.toLowerCase().replace(/\s/g, '').includes(name.toLowerCase().replace(/\s/g, '')))
         }
@@ -51,6 +54,9 @@ function callData() {
         return res.json()
     })
     .then(data => {
+        data.sort((first,second) => {
+            return first.ts - second.ts
+        })
         data.forEach(user => {
             const payload = `<tr>
                             <th scope="row">${user.name}</th>
