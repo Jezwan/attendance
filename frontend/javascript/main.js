@@ -17,7 +17,7 @@ document.querySelector('form').addEventListener('submit', function(event) {
             object = data.filter(item => timestamp(item.ts).date == date)
         }
         else {
-            object = data.filter(item => item.name.toLowerCase().replace(/\s/g, '') == name.toLowerCase().replace(/\s/g, '') && timestamp(item.ts).date == date)
+            object = data.filter(item => item.name.toLowerCase().replace(/\s/g, '').includes(name.toLowerCase().replace(/\s/g, '')) && timestamp(item.ts).date == date)
         }
         return object
     })
