@@ -25,7 +25,7 @@ fetch('https://0m3q5zuw40.execute-api.eu-north-1.amazonaws.com/invoke/dbmanager'
     else if (item.status === "Exit" && workingHoursData[item.id].lastEntryTimestamp) {
       const entryTimestamp = parseInt(workingHoursData[item.id].lastEntryTimestamp, 10)
       const exitTimestamp = parseInt(item.ts, 10)
-      const hoursWorked = (exitTimestamp - entryTimestamp) / (60 * 60)
+      const hoursWorked = (exitTimestamp - entryTimestamp) / (1000 * 60 * 60)
       workingHoursData[item.id].totalHours += hoursWorked
       workingHoursData[item.id].lastEntryTimestamp = null
     }
