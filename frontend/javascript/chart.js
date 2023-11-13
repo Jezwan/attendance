@@ -66,3 +66,4 @@ fetch('https://0m3q5zuw40.execute-api.eu-north-1.amazonaws.com/invoke/dbmanager'
     }
   })
 })
+.catch(error => console.log(error))
